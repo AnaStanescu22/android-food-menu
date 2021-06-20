@@ -25,11 +25,10 @@ class FoodCategoriesActivity : AppCompatActivity() {
         viewModel.state.observe(this) { foodCategoriesState ->
             foodCategoriesAdapter.setFoodCategories(foodCategoriesState.categories)
 
-            if (foodCategoriesState.loading) {
+            if (foodCategoriesState.loading)
                 loadingProgressBar.visibility = View.VISIBLE
-            } else {
+            else
                 loadingProgressBar.visibility = View.GONE
-            }
         }
     }
 }
