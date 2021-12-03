@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodMenu">
-        <activity android:name=".feature.categories.FoodCategoriesActivity">
+        <activity android:name=".feature.categories.FoodCategoriesActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

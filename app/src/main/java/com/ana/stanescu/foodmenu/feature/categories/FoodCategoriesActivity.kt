@@ -6,29 +6,31 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ana.stanescu.foodmenu.R
-import kotlinx.android.synthetic.main.activity_food_menu.*
-import kotlinx.coroutines.launch
+import com.ana.stanescu.foodmenu.databinding.ActivityFoodMenuBinding
 
 class FoodCategoriesActivity : AppCompatActivity() {
     private val viewModel by viewModels<FoodCategoriesViewModel>()
     private lateinit var foodCategoriesAdapter: FoodCategoriesRecyclerAdapter
 
+    private lateinit var binding: ActivityFoodMenuBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_food_menu)
+        binding = ActivityFoodMenuBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        foodCategoriesRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.foodCategoriesRecyclerView.layoutManager = LinearLayoutManager(this)
         foodCategoriesAdapter = FoodCategoriesRecyclerAdapter()
-        foodCategoriesRecyclerView.adapter = foodCategoriesAdapter
+        binding.foodCategoriesRecyclerView.adapter = foodCategoriesAdapter
 
         viewModel.state.observe(this) { foodCategoriesState ->
             foodCategoriesAdapter.setFoodCategories(foodCategoriesState.categories)
 
             if (foodCategoriesState.loading)
-                loadingProgressBar.visibility = View.VISIBLE
+                binding.loadingProgressBar.visibility = View.VISIBLE
             else
-                loadingProgressBar.visibility = View.GONE
+                binding.loadingProgressBar.visibility = View.GONE
         }
     }
 }
