@@ -7,13 +7,15 @@ import android.widget.ImageView
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.ana.stanescu.foodmenu.R
+import com.ana.stanescu.foodmenu.databinding.ActivityFoodMenuBinding
+import com.ana.stanescu.foodmenu.databinding.ItemFoodCategoryBinding
 import com.ana.stanescu.foodmenu.model.response.FoodCategory
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_food_category.view.*
 
 class FoodCategoriesRecyclerAdapter : RecyclerView.Adapter<FoodCategoriesRecyclerAdapter.FoodCategoryViewHolder>() {
 
     private var foodCategories: List<FoodCategory> = emptyList()
+    private lateinit var binding: ItemFoodCategoryBinding
 
     fun setFoodCategories(data: List<FoodCategory>) {
         this.foodCategories = data
@@ -24,8 +26,8 @@ class FoodCategoriesRecyclerAdapter : RecyclerView.Adapter<FoodCategoriesRecycle
         parent: ViewGroup,
         viewType: Int
     ): FoodCategoryViewHolder {
-        val inflatedView = parent.inflate(R.layout.item_food_category, false)
-        return FoodCategoryViewHolder(inflatedView)
+        binding = ItemFoodCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return FoodCategoryViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: FoodCategoryViewHolder, position: Int) {
@@ -35,17 +37,15 @@ class FoodCategoriesRecyclerAdapter : RecyclerView.Adapter<FoodCategoriesRecycle
 
     override fun getItemCount() = foodCategories.size
 
-    class FoodCategoryViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
-        private var view: View = v
+    class FoodCategoryViewHolder(private val binding: ItemFoodCategoryBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindFoodCategory(foodCategory: FoodCategory) {
             Picasso
                 .get()
                 .load(foodCategory.imageUrl)
-                .into(view.foodImageView)
-            view.titleTextView.text = foodCategory.name
-            view.descriptionTextView.text = foodCategory.description
+                .into(binding.foodImageView)
+            binding.titleTextView.text = foodCategory.name
+            binding.descriptionTextView.text = foodCategory.description
         }
 
     }
