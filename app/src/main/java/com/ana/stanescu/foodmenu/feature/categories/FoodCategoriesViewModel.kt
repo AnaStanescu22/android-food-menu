@@ -1,6 +1,5 @@
 package com.ana.stanescu.foodmenu.feature.categories
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,7 +17,7 @@ class FoodCategoriesViewModel(private val repository: FoodMenuRepository = FoodM
     }
 
     private val _state: MutableLiveData<FoodCategoriesState> =
-        MutableLiveData(FoodCategoriesState(true, listOf()))
+        MutableLiveData(FoodCategoriesState(true, emptyList()))
 
     val state: LiveData<FoodCategoriesState>
         get() = _state

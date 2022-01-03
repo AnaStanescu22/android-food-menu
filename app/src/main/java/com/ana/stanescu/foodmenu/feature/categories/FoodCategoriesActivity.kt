@@ -2,35 +2,35 @@ package com.ana.stanescu.foodmenu.feature.categories
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ana.stanescu.foodmenu.databinding.ActivityFoodMenuBinding
 
 class FoodCategoriesActivity : AppCompatActivity() {
     private val viewModel by viewModels<FoodCategoriesViewModel>()
-    private lateinit var foodCategoriesAdapter: FoodCategoriesRecyclerAdapter
-
     private lateinit var binding: ActivityFoodMenuBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFoodMenuBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
-        binding.foodCategoriesRecyclerView.layoutManager = LinearLayoutManager(this)
-        foodCategoriesAdapter = FoodCategoriesRecyclerAdapter()
-        binding.foodCategoriesRecyclerView.adapter = foodCategoriesAdapter
+        val foodCategoriesAdapter = FoodCategoriesRecyclerAdapter()
+        binding.foodCategoriesRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@FoodCategoriesActivity)
+            adapter = foodCategoriesAdapter
+        }
 
         viewModel.state.observe(this) { foodCategoriesState ->
-            foodCategoriesAdapter.setFoodCategories(foodCategoriesState.categories)
-
-            if (foodCategoriesState.loading)
-                binding.loadingProgressBar.visibility = View.VISIBLE
-            else
-                binding.loadingProgressBar.visibility = View.GONE
+            foodCategoriesAdapter.setFoodCategories(foodCategoriesState.categories).also {
+                // This click listener is to help detect when a click is done on a FoodCategory object
+                foodCategoriesAdapter.setItemClickListener {
+                    Toast.makeText(this, it.name, Toast.LENGTH_LONG).show()
+                }
+            }
+            binding.loadingProgressBar.isVisible = foodCategoriesState.loading
         }
     }
 }
