@@ -19,7 +19,6 @@ class FoodMenuRepository {
         service = retrofit.create(Service::class.java)
     }
 
-
     suspend fun getFoodCategories(): FoodCategoriesResponse {
         return service.getMenu()
     }
