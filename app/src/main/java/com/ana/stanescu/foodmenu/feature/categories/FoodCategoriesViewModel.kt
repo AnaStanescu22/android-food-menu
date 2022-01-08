@@ -13,10 +13,6 @@ import kotlinx.coroutines.launch
 class FoodCategoriesViewModel(private val repository: FoodMenuRepository = FoodMenuRepository()) :
     ViewModel() {
 
-    private val errorHandler = CoroutineExceptionHandler { _, throwable ->
-        throwable.printStackTrace()
-    }
-
     private val _state: MutableLiveData<FoodCategoriesState> =
         MutableLiveData(FoodCategoriesState(true, listOf()))
 
@@ -24,8 +20,8 @@ class FoodCategoriesViewModel(private val repository: FoodMenuRepository = FoodM
         get() = _state
 
     init {
-        viewModelScope.launch(errorHandler) {
-            val categories = repository.getFoodCategories().categories
+        viewModelScope.launch() {
+            val categories = repository.getFoodCategories()
             _state.value = FoodCategoriesState(false, categories)
         }
     }
