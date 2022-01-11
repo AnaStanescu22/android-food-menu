@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ana.stanescu.foodmenu.databinding.ActivityFoodMenuBinding
 
@@ -31,6 +30,13 @@ class FoodCategoriesActivity : AppCompatActivity() {
                 binding.loadingProgressBar.visibility = View.VISIBLE
             else
                 binding.loadingProgressBar.visibility = View.GONE
+        }
+
+        viewModel.stateRandomMeal.observe(this) { randomMeal ->
+            if (randomMeal != null) {
+                binding.categoryTextView.text = randomMeal.name
+                binding.mealTextView.text = randomMeal.category
+            }
         }
     }
 }
