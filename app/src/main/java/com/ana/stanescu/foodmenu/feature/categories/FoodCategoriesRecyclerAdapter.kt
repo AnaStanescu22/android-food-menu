@@ -1,21 +1,17 @@
 package com.ana.stanescu.foodmenu.feature.categories
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import com.ana.stanescu.foodmenu.R
-import com.ana.stanescu.foodmenu.databinding.ActivityFoodMenuBinding
-import com.ana.stanescu.foodmenu.databinding.ItemFoodCategoryBinding
 import com.ana.stanescu.foodmenu.model.response.FoodCategory
 import com.squareup.picasso.Picasso
+import com.ana.stanescu.foodmenu.databinding.ItemFoodCategoryBinding as ItemFoodCategoryBinding1
 
-class FoodCategoriesRecyclerAdapter : RecyclerView.Adapter<FoodCategoriesRecyclerAdapter.FoodCategoryViewHolder>() {
+class FoodCategoriesRecyclerAdapter :
+    RecyclerView.Adapter<FoodCategoriesRecyclerAdapter.FoodCategoryViewHolder>() {
 
     private var foodCategories: List<FoodCategory> = emptyList()
-    private lateinit var binding: ItemFoodCategoryBinding
+    private lateinit var binding: ItemFoodCategoryBinding1
 
     fun setFoodCategories(data: List<FoodCategory>) {
         this.foodCategories = data
@@ -26,7 +22,8 @@ class FoodCategoriesRecyclerAdapter : RecyclerView.Adapter<FoodCategoriesRecycle
         parent: ViewGroup,
         viewType: Int
     ): FoodCategoryViewHolder {
-        binding = ItemFoodCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding =
+            ItemFoodCategoryBinding1.inflate(LayoutInflater.from(parent.context), parent, false)
         return FoodCategoryViewHolder(binding)
     }
 
@@ -37,7 +34,8 @@ class FoodCategoriesRecyclerAdapter : RecyclerView.Adapter<FoodCategoriesRecycle
 
     override fun getItemCount() = foodCategories.size
 
-    class FoodCategoryViewHolder(private val binding: ItemFoodCategoryBinding) : RecyclerView.ViewHolder(binding.root) {
+    class FoodCategoryViewHolder(private val binding: ItemFoodCategoryBinding1) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bindFoodCategory(foodCategory: FoodCategory) {
             Picasso
@@ -49,8 +47,4 @@ class FoodCategoriesRecyclerAdapter : RecyclerView.Adapter<FoodCategoriesRecycle
         }
 
     }
-}
-
-fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
-    return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }

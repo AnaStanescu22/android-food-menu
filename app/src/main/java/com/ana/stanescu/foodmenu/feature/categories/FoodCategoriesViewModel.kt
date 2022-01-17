@@ -1,6 +1,5 @@
 package com.ana.stanescu.foodmenu.feature.categories
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,10 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.ana.stanescu.foodmenu.model.FoodMenuRepository
 import com.ana.stanescu.foodmenu.model.response.FoodCategory
 import kotlinx.coroutines.launch
-import java.util.ArrayList
-import java.util.Comparator
-import java.util.function.Predicate
-import java.util.stream.Collectors
 
 class FoodCategoriesViewModel(private val repository: FoodMenuRepository = FoodMenuRepository()) :
     ViewModel() {
@@ -25,14 +20,14 @@ class FoodCategoriesViewModel(private val repository: FoodMenuRepository = FoodM
     private lateinit var cachedCategories: List<FoodCategory>
 
     init {
-        viewModelScope.launch() {
+        viewModelScope.launch {
             val categories = repository.getFoodCategories()
             _state.value = FoodCategoriesState(false, categories)
             cachedCategories = categories
         }
     }
 
-    fun sort(type : SortingType) {
+    fun sort(type: SortingType) {
         val currentState = _state.value
         if (currentState != null) {
             val categories: List<FoodCategory> = currentState.categories
@@ -47,9 +42,9 @@ class FoodCategoriesViewModel(private val repository: FoodMenuRepository = FoodM
     fun filter(newText: String) {
         val categories: List<FoodCategory> = cachedCategories
             .filter { p: FoodCategory ->
-                p.name.contains(newText)
+                p.name.lowercase().contains(newText.lowercase())
             }
-        _state.value= FoodCategoriesState(false, categories)
+        _state.value = FoodCategoriesState(false, categories)
     }
 }
 
