@@ -6,6 +6,7 @@ import com.ana.stanescu.foodmenu.model.FoodMenuRepository
 import com.ana.stanescu.foodmenu.model.response.FoodCategory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class FoodCategoriesViewModel(private val repository: FoodMenuRepository = FoodMenuRepository()) :
@@ -17,6 +18,8 @@ class FoodCategoriesViewModel(private val repository: FoodMenuRepository = FoodM
     val state = _state.asStateFlow()
 
     private lateinit var cachedCategories: List<FoodCategory>
+
+    val loadingState = state.map { value -> value.loading == true }
 
     init {
         viewModelScope.launch {

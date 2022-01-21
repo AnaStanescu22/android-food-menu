@@ -43,8 +43,10 @@ class FoodCategoriesFragment : Fragment() {
 
         viewModel.state.onEach { foodCategoriesState ->
             foodCategoriesAdapter.setFoodCategories(foodCategoriesState.categories)
+        }.launchIn(lifecycleScope)
 
-            if (foodCategoriesState.loading)
+        viewModel.loadingState.onEach { isLoading ->
+            if (isLoading)
                 binding.loadingProgressBar.visibility = View.VISIBLE
             else
                 binding.loadingProgressBar.visibility = View.GONE
