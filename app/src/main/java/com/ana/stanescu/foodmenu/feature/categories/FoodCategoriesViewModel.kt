@@ -1,21 +1,20 @@
 package com.ana.stanescu.foodmenu.feature.categories
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ana.stanescu.foodmenu.model.FoodMenuRepository
 import com.ana.stanescu.foodmenu.model.response.FoodCategory
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class FoodCategoriesViewModel(private val repository: FoodMenuRepository = FoodMenuRepository()) :
     ViewModel() {
 
-    private val _state: MutableLiveData<FoodCategoriesState> =
-        MutableLiveData(FoodCategoriesState(true, listOf()))
+    private val _state: MutableStateFlow<FoodCategoriesState> =
+        MutableStateFlow(FoodCategoriesState(true, listOf()))
 
-    val state: LiveData<FoodCategoriesState>
-        get() = _state
+    val state = _state.asStateFlow()
 
     private lateinit var cachedCategories: List<FoodCategory>
 

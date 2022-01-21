@@ -7,9 +7,15 @@ import android.view.*
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ana.stanescu.foodmenu.R
 import com.ana.stanescu.foodmenu.databinding.FragmentFoodCategoriesBinding
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class FoodCategoriesFragment : Fragment() {
     private var _binding: FragmentFoodCategoriesBinding? = null
@@ -35,14 +41,14 @@ class FoodCategoriesFragment : Fragment() {
         binding.foodCategoriesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.foodCategoriesRecyclerView.adapter = foodCategoriesAdapter
 
-        viewModel.state.observe(this) { foodCategoriesState ->
+        viewModel.state.onEach { foodCategoriesState ->
             foodCategoriesAdapter.setFoodCategories(foodCategoriesState.categories)
 
             if (foodCategoriesState.loading)
                 binding.loadingProgressBar.visibility = View.VISIBLE
             else
                 binding.loadingProgressBar.visibility = View.GONE
-        }
+        }.launchIn(lifecycleScope)
     }
 
     override fun onDestroyView() {
