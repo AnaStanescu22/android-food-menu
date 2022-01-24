@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/ic_baseline_filter_list_24"
+        ></item>
+
+    <item android:width="8dp"
+        android:height="8dp"
+        android:gravity="bottom|end">
+        <shape android:shape="oval">
+            <solid android:color="#9D00FE" />
+        </shape>
+    </item>
+</layer-list>

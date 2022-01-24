@@ -5,17 +5,15 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ana.stanescu.foodmenu.R
 import com.ana.stanescu.foodmenu.databinding.FragmentFoodCategoriesBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 class FoodCategoriesFragment : Fragment() {
     private var _binding: FragmentFoodCategoriesBinding? = null
@@ -46,10 +44,7 @@ class FoodCategoriesFragment : Fragment() {
         }.launchIn(lifecycleScope)
 
         viewModel.loadingState.onEach { isLoading ->
-            if (isLoading)
-                binding.loadingProgressBar.visibility = View.VISIBLE
-            else
-                binding.loadingProgressBar.visibility = View.GONE
+            binding.loadingProgressBar.isVisible = isLoading
         }.launchIn(lifecycleScope)
     }
 

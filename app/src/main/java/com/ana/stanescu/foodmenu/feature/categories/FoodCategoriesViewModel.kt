@@ -19,7 +19,7 @@ class FoodCategoriesViewModel(private val repository: FoodMenuRepository = FoodM
 
     private lateinit var cachedCategories: List<FoodCategory>
 
-    val loadingState = state.map { value -> value.loading == true }
+    val loadingState = state.map { value -> value.loading }
 
     init {
         viewModelScope.launch {
@@ -31,14 +31,12 @@ class FoodCategoriesViewModel(private val repository: FoodMenuRepository = FoodM
 
     fun sort(type: SortingType) {
         val currentState = _state.value
-        if (currentState != null) {
-            val categories: List<FoodCategory> = currentState.categories
-            val sortedList = when (type) {
-                SortingType.ALPHABETICALLY_ASCENDING -> categories.sortedBy { it.name }
-                SortingType.ALPHABETICALLY_DESCENDING -> categories.sortedByDescending { it.name }
-            }
-            _state.value = FoodCategoriesState(false, sortedList)
+        val categories: List<FoodCategory> = currentState.categories
+        val sortedList = when (type) {
+            SortingType.ALPHABETICALLY_ASCENDING -> categories.sortedBy { it.name }
+            SortingType.ALPHABETICALLY_DESCENDING -> categories.sortedByDescending { it.name }
         }
+        _state.value = FoodCategoriesState(false, sortedList)
     }
 
     fun filter(newText: String) {
