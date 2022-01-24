@@ -7,17 +7,18 @@ import com.ana.stanescu.foodmenu.data.FoodCategoryDao
 import com.ana.stanescu.foodmenu.data.FoodCategoryRoomDatabase
 import com.ana.stanescu.foodmenu.model.FoodMenuRepository
 import com.ana.stanescu.foodmenu.model.response.FoodCategory
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class FoodCategoriesViewModel(app: Application) :
-    AndroidViewModel(app) {
+class FoodCategoriesViewModel(app: Application) : AndroidViewModel(app) {
 
-    private val repository: FoodMenuRepository = FoodMenuRepository()
+    private val repository: FoodMenuRepository by lazy { FoodMenuRepository() }
     private val _state: MutableStateFlow<FoodCategoriesState> =
-        MutableStateFlow(FoodCategoriesState(true, listOf()))
+        MutableStateFlow(FoodCategoriesState(true, emptyList()))
 
     val state = _state.asStateFlow()
 
@@ -37,13 +38,13 @@ class FoodCategoriesViewModel(app: Application) :
         }
     }
 
-    private suspend fun getFoodCategories(): List<FoodCategory> {
-        return try {
+    private suspend fun getFoodCategories(): List<FoodCategory> = withContext(Dispatchers.IO){
+        return@withContext try {
             val response = repository.service.getMenu()
             dao.insert(response.categories)
             dao.getCategories()
         } catch (e: Exception) {
-            dao.getCategories()
+            return@withContext emptyList()
         }
     }
 
