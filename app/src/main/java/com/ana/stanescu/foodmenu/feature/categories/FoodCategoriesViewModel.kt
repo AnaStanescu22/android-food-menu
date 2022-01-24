@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.system.measureTimeMillis
 
 class FoodCategoriesViewModel(app: Application) : AndroidViewModel(app) {
 
@@ -32,19 +33,22 @@ class FoodCategoriesViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         viewModelScope.launch {
-            val categories = getFoodCategories()
-            _state.value = FoodCategoriesState(false, categories)
-            cachedCategories = categories
+            val elapsedTime = measureTimeMillis {
+                val categories = getFoodCategories()
+                _state.value = FoodCategoriesState(false, categories)
+                cachedCategories = categories
+            }
+            println("Running the code with the Dispatchers.IO: $elapsedTime milliseconds")
         }
     }
 
-    private suspend fun getFoodCategories(): List<FoodCategory> = withContext(Dispatchers.IO){
-        return@withContext try {
+    private suspend fun getFoodCategories(): List<FoodCategory> = withContext(Dispatchers.IO) {
+        try {
             val response = repository.service.getMenu()
             dao.insert(response.categories)
             dao.getCategories()
         } catch (e: Exception) {
-            return@withContext emptyList()
+            emptyList()
         }
     }
 
