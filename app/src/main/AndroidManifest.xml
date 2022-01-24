@@ -6,13 +6,13 @@
 
     <application
         android:allowBackup="true"
-        android:name=".FoodMenuApplication"
+        android:name=".presentation.FoodMenuApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodMenu">
-        <activity android:name=".feature.categories.FoodCategoriesActivity"
+        <activity android:name=".presentation.categories.ui.FoodCategoriesActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

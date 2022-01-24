@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature.categories.FoodCategoriesActivity">
+    tools:context=".presentation.categories.ui.FoodCategoriesActivity">
 
 <fragment
-    android:name="com.ana.stanescu.foodmenu.feature.categories.FoodCategoriesFragment"
+    android:name="com.ana.stanescu.foodmenu.presentation.categories.ui.FoodCategoriesFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_container_view"

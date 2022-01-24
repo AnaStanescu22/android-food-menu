@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".feature.categories.FoodCategoriesFragment">
+    tools:context=".presentation.categories.ui.FoodCategoriesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/foodCategoriesRecyclerView"
@@ -19,6 +19,7 @@
         android:id="@+id/loadingProgressBar"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:layout_gravity="center_vertical|center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

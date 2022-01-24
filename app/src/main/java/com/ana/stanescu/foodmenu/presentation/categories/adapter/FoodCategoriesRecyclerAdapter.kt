@@ -1,21 +1,33 @@
-package com.ana.stanescu.foodmenu.feature.categories
+package com.ana.stanescu.foodmenu.presentation.categories.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.ana.stanescu.foodmenu.model.response.FoodCategory
+import com.ana.stanescu.foodmenu.domain.FoodCategory
 import com.squareup.picasso.Picasso
 import com.ana.stanescu.foodmenu.databinding.ItemFoodCategoryBinding as ItemFoodCategoryBinding1
 
 class FoodCategoriesRecyclerAdapter :
     RecyclerView.Adapter<FoodCategoriesRecyclerAdapter.FoodCategoryViewHolder>() {
 
-    private var foodCategories: List<FoodCategory> = emptyList()
     private lateinit var binding: ItemFoodCategoryBinding1
 
+    private val diffUtil = object : DiffUtil.ItemCallback<FoodCategory>() {
+        override fun areContentsTheSame(p0: FoodCategory, p1: FoodCategory): Boolean {
+            return p0 == p1
+        }
+
+        override fun areItemsTheSame(p0: FoodCategory, p1: FoodCategory): Boolean {
+            return p0.id == p1.id
+        }
+    }
+
+    private val differ = AsyncListDiffer(this, diffUtil)
+
     fun setFoodCategories(data: List<FoodCategory>) {
-        this.foodCategories = data
-        notifyDataSetChanged()
+        differ.submitList(data)
     }
 
     override fun onCreateViewHolder(
@@ -28,11 +40,11 @@ class FoodCategoriesRecyclerAdapter :
     }
 
     override fun onBindViewHolder(holder: FoodCategoryViewHolder, position: Int) {
-        val foodCategory = foodCategories[position]
+        val foodCategory = differ.currentList[position]
         holder.bindFoodCategory(foodCategory)
     }
 
-    override fun getItemCount() = foodCategories.size
+    override fun getItemCount() = differ.currentList.size
 
     class FoodCategoryViewHolder(private val binding: ItemFoodCategoryBinding1) :
         RecyclerView.ViewHolder(binding.root) {

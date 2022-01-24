@@ -1,22 +1,23 @@
-package com.ana.stanescu.foodmenu.data
+package com.ana.stanescu.foodmenu.framework.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.ana.stanescu.foodmenu.model.response.FoodCategory
+import com.ana.stanescu.foodmenu.framework.db.dao.FoodCategoryDao
+import com.ana.stanescu.foodmenu.framework.db.model.FoodCategoryEntity
 
-@Database(entities = [FoodCategory::class], version = 1, exportSchema = false)
-abstract class FoodCategoryRoomDatabase: RoomDatabase() {
+@Database(entities = [FoodCategoryEntity::class], version = 1, exportSchema = false)
+abstract class AppDatabase: RoomDatabase() {
     abstract fun itemDao(): FoodCategoryDao
     companion object {
         @Volatile
-        private var INSTANCE: FoodCategoryRoomDatabase? = null
-        fun getDatabase(context: Context): FoodCategoryRoomDatabase {
+        private var INSTANCE: AppDatabase? = null
+        operator fun invoke(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    FoodCategoryRoomDatabase::class.java,
+                    AppDatabase::class.java,
                     "item_database")
                     .fallbackToDestructiveMigration()
                     .build()

@@ -1,4 +1,4 @@
-package com.ana.stanescu.foodmenu.feature.categories
+package com.ana.stanescu.foodmenu.presentation.categories.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
