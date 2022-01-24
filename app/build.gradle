@@ -19,10 +19,17 @@ android {
     }
 
     buildTypes {
+        debug {
+            //Use internal Server URL here
+            buildConfigField 'String', 'API_URL', '"https://www.themealdb.com/api/json/v1/1/"'
+        }
         release {
+            //Use LIVE server URL here
+            buildConfigField 'String', 'API_URL', '"https://www.themealdb.com/api/json/v1/1/"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
