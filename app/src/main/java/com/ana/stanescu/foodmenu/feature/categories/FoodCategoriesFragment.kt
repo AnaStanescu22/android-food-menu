@@ -15,6 +15,11 @@ import com.ana.stanescu.foodmenu.databinding.FragmentFoodCategoriesBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
+import androidx.appcompat.app.AppCompatActivity
+
+
+
+
 class FoodCategoriesFragment : Fragment() {
     private var _binding: FragmentFoodCategoriesBinding? = null
     private val binding get() = _binding!!
@@ -69,6 +74,7 @@ class FoodCategoriesFragment : Fragment() {
                 return false
             }
         })
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Food Categories"
 
         super.onCreateOptionsMenu(menu, inflater)
 

@@ -47,6 +47,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.fragment:fragment-ktx:1.4.0'
+    implementation 'com.google.android.material:material:1.5.0'
 
 
     testImplementation 'junit:junit:4.13.2'
@@ -85,5 +86,4 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
-
 }
